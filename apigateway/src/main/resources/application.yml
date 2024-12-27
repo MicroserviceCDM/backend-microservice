@@ -1,6 +1,11 @@
 server:
   port: 9296
 
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_URL:http://registryservice:8761/eureka/}
+
 spring:
   config:
     import: optional:configserver:${CONFIG_SERVER_URL:http://localhost:8888}
@@ -11,10 +16,10 @@ spring:
   cloud:
     gateway:
       routes:
-        - id: REGISTRY-SERVICE
-          uri: lb://REGISTRY-SERVICE
-          predicates:
-            - Path=/eureka
+#        - id: REGISTRY-SERVICE
+#          uri: lb://REGISTRY-SERVICE
+#          predicates:
+#            - Path=/eureka
 
 
         - id: AUTH-SERVICE
@@ -95,10 +100,7 @@ spring:
           uri: lb://VOUCHER-SERVICE
           predicates:
             - Path=/api/vouchers/**
-eureka:
-  client:
-    service-url:
-      defaultZone: ${EUREKA_URL:http://registryservice:8761/eureka/}
+
 management:
   zipkin:
     tracing:

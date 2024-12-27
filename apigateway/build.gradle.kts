@@ -6,6 +6,9 @@ dependencies {
     
     // Security
     implementation("org.springframework.boot:spring-boot-starter-security")
+
+    // Spring Cloud
+    implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client")
     
     // JWT
     implementation("io.jsonwebtoken:jjwt-api:0.11.5")

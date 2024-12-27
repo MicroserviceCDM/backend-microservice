@@ -3,7 +3,6 @@ version: '3.8'
 networks:
   cdm-network:
     driver: bridge
-    external: true
 
 services:
   registryservice:
@@ -45,7 +44,7 @@ services:
       - cdm-network
     depends_on:
       - registryservice
-      - configserver
+#      - configserver
 
   # Business Services
   authservice:
@@ -59,7 +58,7 @@ services:
       - cdm-network
     depends_on:
       - registryservice
-      - configserver
+#      - configserver
 
   productservice:
     environment:
@@ -72,7 +71,7 @@ services:
       - cdm-network
     depends_on:
       - registryservice
-      - configserver
+#      - configserver
 
   orderservice:
     build:
@@ -87,7 +86,7 @@ services:
       - mongodb
       - broker
       - registryservice
-      - configserver
+#      - configserver
 
   inventoryservice:
     build:
@@ -101,7 +100,7 @@ services:
     depends_on:
       - mongodb
       - registryservice
-      - configserver
+#      - configserver
 
   paymentservice:
     build:
@@ -115,7 +114,7 @@ services:
     depends_on:
       - mongodb
       - registryservice
-      - configserver
+#      - configserver
 
   notificationservice:
     build:
@@ -129,7 +128,7 @@ services:
     depends_on:
       - broker
       - registryservice
-      - configserver
+#      - configserver
 
   chatservice:
     build:
@@ -143,7 +142,7 @@ services:
     depends_on:
       - mongodb
       - registryservice
-      - configserver
+#      - configserver
 
   energyservice:
     build:
@@ -157,7 +156,7 @@ services:
     depends_on:
       - mongodb
       - registryservice
-      - configserver
+#      - configserver
 
   reportservice:
     build:
@@ -171,7 +170,7 @@ services:
     depends_on:
       - mongodb
       - registryservice
-      - configserver
+#      - configserver
 
   voucherservice:
      build:
@@ -185,5 +184,5 @@ services:
      depends_on:
        - mongodb
        - registryservice
-       - configserver
+#       - configserver
 

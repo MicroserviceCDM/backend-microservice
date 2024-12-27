@@ -18,7 +18,7 @@ spring:
   application:
     name: ORDER-SERVICE
   kafka:
-    bootstrap-servers: localhost:9092
+    bootstrap-servers: broker:29092
     template:
       default-topic: order-events
     producer:
