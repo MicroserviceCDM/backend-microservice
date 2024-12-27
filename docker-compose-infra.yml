@@ -1,0 +1,109 @@
+version: '3.8'
+
+services:
+  # Infrastructure Services
+  zipkin:
+    image: openzipkin/zipkin
+    container_name: zipkin
+    ports:
+      - "9411:9411"
+    networks:
+      - cdm-network
+
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.0.1
+    container_name: zookeeper
+    ports:
+      - "2181:2181"
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    networks:
+      - cdm-network
+
+  broker:
+    image: confluentinc/cp-kafka:7.0.1
+    container_name: broker
+    ports:
+      - "9092:9092"
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_INTERNAL:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092,PLAINTEXT_INTERNAL://broker:29092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+    networks:
+      - cdm-network
+
+  data:
+    container_name: data
+    image: postgres:12-alpine
+    restart: always
+    ports:
+      - "5430:5430"
+    expose:
+      - 5430
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    command: -p 5430
+    networks:
+      - cdm-network
+
+  pgadmin:
+    container_name: pgadmin
+    image: dpage/pgadmin4
+    restart: always
+    volumes:
+      - pgadmin4_data:/var/lib/pgadmin4/data
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=postgres@gmail.com
+      - PGADMIN_DEFAULT_PASSWORD=postgres
+    ports:
+      - "5050:80"
+    depends_on:
+      - data
+    networks:
+      - cdm-network
+
+  mongodb:
+    image: mongo
+    container_name: mongodb
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: mongo
+      MONGO_INITDB_ROOT_PASSWORD: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - cdm-network
+
+  mongo-express:
+    image: mongo-express
+    container_name: mongo-express
+    restart: always
+    ports:
+      - "8081:8081"
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: mongo
+      ME_CONFIG_MONGODB_ADMINPASSWORD: mongo
+      ME_CONFIG_MONGODB_SERVER: mongodb
+    networks:
+      - cdm-network
+    depends_on:
+      - mongodb
+
+networks:
+  cdm-network:
+    driver: bridge
+
+volumes:
+  mongodb_data: {}
+  pgadmin4_data: {}

@@ -1,0 +1,59 @@
+server:
+  port: 0
+
+spring:
+  data:
+    mongodb:
+      uri: "mongodb+srv://21522343:hoangminhdeptrai@cluster0.06mhzjg.mongodb.net/?retryWrites=true&w=majority"
+      database: "CDM"
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+  application:
+    name: ORDER-SERVICE
+  kafka:
+    bootstrap-servers: localhost:9092
+    template:
+      default-topic: order-events
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      properties:
+        spring:
+          json:
+            type:
+              mapping: order:com.minhvu.orderservice.event.OrderPlaceEvent
+  config:
+    import: optional:configserver:${CONFIG_SERVER_URL:http://localhost:8888}
+
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_URL:http://registryservice:8761/eureka/}
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      external:
+        event-consumer-buffer-size: 10 # buffer size 10
+        failure-rate-threshold: 50 #
+        minimum-number-of-calls: 5
+        automatic-transition-from-open-to-half-open-enabled: true # half open enabled
+        wait-duration-in-open-state: 5s
+        permitted-number-of-calls-in-half-open-state: 3
+        sliding-window-size: 10 # record the outcome of calls when the CircuitBreaker is closed
+        sliding-window-type: COUNT_BASED # the type of the sliding window
+
+management:
+  zipkin:
+    tracing:
+      endpoint: http://localhost:9411/api/v2/spans
+  tracing:
+    sampling:
+      probability: 1.0

@@ -1,0 +1,27 @@
+server:
+  port: 0
+
+spring:
+  application:
+    name: ENERGY-SERVICE
+  data:
+    mongodb:
+      username: mongo
+      password: mongo
+      host: localhost
+      port: 27017
+      database: energy-service
+      authentication-database: admin
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_URL:http://registryservice:8761/eureka/}
+
+cloudinary:
+  cloud_name: djxszgsln
+  api_key: 925724911559638
+  api_secret: SvVdpKQunbpo-AmdQQ-81JNqXUw

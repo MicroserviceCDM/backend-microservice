@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: CHAT-SERVICE
+  data:
+    mongodb:
+      uri: "mongodb+srv://21522343:hoangminhdeptrai@cluster0.06mhzjg.mongodb.net/?retryWrites=true&w=majority"
+      database: "CDM"
+
+server:
+  port: 8080
+
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_URL:http://registryservice:8761/eureka/}

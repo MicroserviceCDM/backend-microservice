@@ -1,0 +1,45 @@
+spring:
+    mail:
+      host: smtp.gmail.com
+      port: 587
+      username: cdm2153@gmail.com
+      password: ahmgxwfvfteauenp
+      properties:
+        mail:
+          smtp:
+            auth: true
+            starttls:
+              enable: true
+    application:
+        name: NOTIFICATION-SERVICE
+    kafka:
+      bootstrap-servers: localhost:9092
+      template:
+        default-topic: order-events, change-password
+      consumer:
+        key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+        value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+        properties:
+          spring:
+            json:
+              type:
+                mapping: order:com.minhvu.notificationservice.event.OrderPlaceEvent, change-password:com.minhvu.notificationservice.event.ChangePasswordEvent
+        group-id: notification-group-id
+    config:
+      import: optional:configserver:${CONFIG_SERVER_URL:http://localhost:8888}
+
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_URL:http://registryservice:8761/eureka/}
+
+server:
+    port: 0
+
+management:
+  zipkin:
+    tracing:
+      endpoint: http://localhost:9411/api/v2/spans
+  tracing:
+    sampling:
+      probability: 1.0

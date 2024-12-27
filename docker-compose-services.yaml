@@ -1,0 +1,189 @@
+version: '3.8'
+
+networks:
+  cdm-network:
+    driver: bridge
+    external: true
+
+services:
+  registryservice:
+    build: 
+      context: ./registryservice
+      dockerfile: Dockerfile
+    container_name: registryservice
+    ports:
+      - "8761:8761"
+    networks:
+      - cdm-network
+
+  configserver:
+    environment:
+      - EUREKA_URL=http://registryservice:8761/eureka/
+    build: 
+      context: ./configserver
+      dockerfile: Dockerfile
+    container_name: configserver
+    ports:
+      - "8888:8888"
+    networks:
+      - cdm-network
+    depends_on:
+      - registryservice
+
+  
+
+  apigateway:
+    environment:
+      - EUREKA_URL=http://registryservice:8761/eureka/
+    build:
+      context: ./apigateway
+      dockerfile: Dockerfile
+    container_name: apigateway
+    ports:
+      - "9296:9296"
+    networks:
+      - cdm-network
+    depends_on:
+      - registryservice
+      - configserver
+
+  # Business Services
+  authservice:
+    environment:
+      - EUREKA_URL=http://registryservice:8761/eureka/
+    build: 
+      context: ./authservice
+      dockerfile: Dockerfile
+    container_name: authservice
+    networks:
+      - cdm-network
+    depends_on:
+      - registryservice
+      - configserver
+
+  productservice:
+    environment:
+      - EUREKA_URL=http://registryservice:8761/eureka/
+    build: 
+      context: ./productservice
+      dockerfile: Dockerfile
+    container_name: productservice
+    networks:
+      - cdm-network
+    depends_on:
+      - registryservice
+      - configserver
+
+  orderservice:
+    build:
+      context: ./orderservice
+      dockerfile: Dockerfile
+    container_name: orderservice
+    ports:
+      - "8084:8084"
+    networks:
+      - cdm-network
+    depends_on:
+      - mongodb
+      - broker
+      - registryservice
+      - configserver
+
+  inventoryservice:
+    build:
+      context: ./inventoryservice
+      dockerfile: Dockerfile
+    container_name: inventoryservice
+    ports:
+      - "8085:8085"
+    networks:
+      - cdm-network
+    depends_on:
+      - mongodb
+      - registryservice
+      - configserver
+
+  paymentservice:
+    build:
+      context: ./paymentservice
+      dockerfile: Dockerfile
+    container_name: paymentservice
+    ports:
+      - "8086:8086"
+    networks:
+      - cdm-network
+    depends_on:
+      - mongodb
+      - registryservice
+      - configserver
+
+  notificationservice:
+    build:
+      context: ./notificationservice
+      dockerfile: Dockerfile
+    container_name: notificationservice
+    ports:
+      - "8087:8087"
+    networks:
+      - cdm-network
+    depends_on:
+      - broker
+      - registryservice
+      - configserver
+
+  chatservice:
+    build:
+      context: ./chatservice
+      dockerfile: Dockerfile
+    container_name: chatservice
+    ports:
+      - "8088:8088"
+    networks:
+      - cdm-network
+    depends_on:
+      - mongodb
+      - registryservice
+      - configserver
+
+  energyservice:
+    build:
+      context: ./energyservice
+      dockerfile: Dockerfile
+    container_name: energyservice
+    ports:
+      - "8089:8089"
+    networks:
+      - cdm-network
+    depends_on:
+      - mongodb
+      - registryservice
+      - configserver
+
+  reportservice:
+    build:
+      context: ./reportservice
+      dockerfile: Dockerfile
+    container_name: reportservice
+    ports:
+      - "8090:8090"
+    networks:
+      - cdm-network
+    depends_on:
+      - mongodb
+      - registryservice
+      - configserver
+
+  voucherservice:
+     build:
+       context: ./voucherservice
+       dockerfile: Dockerfile
+     container_name: voucherservice
+     ports:
+       - "8091:8091"
+     networks:
+       - cdm-network
+     depends_on:
+       - mongodb
+       - registryservice
+       - configserver
+

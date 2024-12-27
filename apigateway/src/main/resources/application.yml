@@ -1,0 +1,108 @@
+server:
+  port: 9296
+
+spring:
+  config:
+    import: optional:configserver:${CONFIG_SERVER_URL:http://localhost:8888}
+  application:
+    name: API-GATEWAY
+  main:
+    web-application-type: reactive
+  cloud:
+    gateway:
+      routes:
+        - id: REGISTRY-SERVICE
+          uri: lb://REGISTRY-SERVICE
+          predicates:
+            - Path=/eureka
+
+
+        - id: AUTH-SERVICE
+          uri: lb://AUTH-SERVICE
+          predicates:
+            - Path=/auth/**
+
+        - id: PRODUCT-SERVICE
+          uri: lb://PRODUCT-SERVICE
+          predicates:
+            - Path=/api/v1/products/**
+          filters:
+            - AuthenticationFilter
+#            - name: CircuitBreaker
+#              args:
+#                name: PRODUCT-SERVICE
+#                fallbackuri: forward:/productServiceFallBack
+
+        - id: INVENTORY-SERVICE
+          uri: lb://INVENTORY-SERVICE
+          predicates:
+            - Path=/api/v1/inventory/**
+          filters:
+            - AuthenticationFilter
+#            - name: CircuitBreaker
+#              args:
+#                name: INVENTORY-SERVICE
+#                fallbackuri: forward:/inventoryServiceFallBack
+
+        - id: ENERGY-SERVICE
+          uri: lb://ENERGY-SERVICE
+          predicates:
+            - Path=/api/v1/energy/**
+          filters:
+            - AuthenticationFilter
+
+        - id: ORDER-SERVICE
+          uri: lb://ORDER-SERVICE
+          predicates:
+            - Path=/api/v1/orders/**
+          filters:
+            - AuthenticationFilter
+#            - name: CircuitBreaker
+#              args:
+#                name: ORDER-SERVICE
+#                fallbackuri: forward:/orderServiceFallBack
+
+        - id: REPORT-SERVICE
+          uri: lb://REPORT-SERVICE
+          predicates:
+            - Path=/api/v1/reports/**
+          filters:
+            - AuthenticationFilter
+#            - name: CircuitBreaker
+#              args:
+#                name: REPORT-SERVICE
+#                fallbackuri: forward:/reportServiceFallBack
+
+        - id: NOTIFICATION-SERVICE
+          uri: lb://NOTIFICATION-SERVICE
+          predicates:
+            - Path=/api/v1/notifications/**
+          filters:
+            - AuthenticationFilter
+
+
+        - id: CHAT-SERVICE
+          uri: lb://CHAT-SERVICE
+          predicates:
+            - Path=/api/chat/**
+
+        - id: PAYMENT-SERVICE
+          uri: lb://PAYMENT-SERVICE
+          predicates:
+            - Path=/api/payment/**
+
+        - id: VOUCHER-SERVICE
+          uri: lb://VOUCHER-SERVICE
+          predicates:
+            - Path=/api/vouchers/**
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_URL:http://registryservice:8761/eureka/}
+management:
+  zipkin:
+    tracing:
+      endpoint: http://localhost:9411/api/v2/spans
+  tracing:
+    sampling:
+      probability: 1.0

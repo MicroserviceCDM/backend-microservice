@@ -1,0 +1,19 @@
+server:
+  port: 8888
+
+spring:
+  application:
+    name: CONFIG-SERVER
+  cloud:
+    config:
+      server:
+        git:
+          username: dvcminh
+          password: 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
+          uri: https://github.com/dvcminh/cdmconfig
+          default-label: main
+          clone-on-start: true
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_URL:http://registryservice:8761/eureka/}
