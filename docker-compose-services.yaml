@@ -15,19 +15,19 @@ services:
     networks:
       - cdm-network
 
-  configserver:
-    environment:
-      - EUREKA_URL=http://registryservice:8761/eureka/
-    build: 
-      context: ./configserver
-      dockerfile: Dockerfile
-    container_name: configserver
-    ports:
-      - "8888:8888"
-    networks:
-      - cdm-network
-    depends_on:
-      - registryservice
+  # configserver:
+  #   environment:
+  #     - EUREKA_URL=http://registryservice:8761/eureka/
+  #   build: 
+  #     context: ./configserver
+  #     dockerfile: Dockerfile
+  #   container_name: configserver
+  #   ports:
+  #     - "8888:8888"
+  #   networks:
+  #     - cdm-network
+  #   depends_on:
+  #     - registryservice
 
   
 

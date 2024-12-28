@@ -4,7 +4,7 @@ server:
 spring:
   data:
     mongodb:
-      uri: "mongodb+srv://21522343:hoangminhdeptrai@cluster0.06mhzjg.mongodb.net/?retryWrites=true&w=majority"
+      uri: "mongodb://localhost:27017/?directConnection=true"
       database: "CDM"
   jpa:
     hibernate:
