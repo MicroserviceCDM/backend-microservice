@@ -15,7 +15,7 @@ plugins {
 tasks.bootJar {enabled = false}
 
 allprojects {
-    group = "com.minhvu"
+    group = "io.github.cdm"
 
     repositories {
         mavenCentral()
