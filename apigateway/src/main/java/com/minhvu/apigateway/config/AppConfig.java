@@ -7,6 +7,7 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.reactive.CorsWebFilter;
 import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
 import org.springframework.web.util.pattern.PathPatternParser;
+import java.util.Collections;
 
 @Configuration
 public class AppConfig {
@@ -18,7 +19,7 @@ public class AppConfig {
     @Bean
     public CorsWebFilter corsWebFilter() {
         CorsConfiguration corsConfig = new CorsConfiguration();
-        corsConfig.addAllowedOrigin("https://cdm.tuilakhanh.id.vn");
+        corsConfig.setAllowedOrigins(Collections.singletonList("https://cdm.tuilakhanh.id.vn"));
         corsConfig.addAllowedHeader("*");
         corsConfig.addAllowedMethod("*");
         corsConfig.setAllowCredentials(true);
