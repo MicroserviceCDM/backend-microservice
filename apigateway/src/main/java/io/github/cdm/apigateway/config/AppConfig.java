@@ -29,7 +29,11 @@ public class AppConfig {
         corsConfig.setMaxAge(3600L);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource(new PathPatternParser());
-        source.registerCorsConfiguration("/api/chat/(?!(ws|app)).*", corsConfig);
+
+        source.registerCorsConfiguration("/**", corsConfig);
+        
+        source.registerCorsConfiguration("/api/chat/ws/**", null);
+        source.registerCorsConfiguration("/api/chat/app/**", null);
         
         return new CorsWebFilter(source);
     }
