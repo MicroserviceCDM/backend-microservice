@@ -1,7 +1,7 @@
 package io.github.cdm.authservice.controller;
 
 import io.github.cdm.authservice.config.CustomUserDetailsService;
-import com.minhvu.authservice.dto.*;
+import io.github.cdm.authservice.dto.*;
 import io.github.cdm.authservice.dto.*;
 import io.github.cdm.authservice.event.ChangePasswordEvent;
 import io.github.cdm.authservice.mapper.UserMapper;

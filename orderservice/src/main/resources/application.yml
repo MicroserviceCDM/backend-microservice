@@ -28,7 +28,7 @@ spring:
         spring:
           json:
             type:
-              mapping: order:com.minhvu.orderservice.event.OrderPlaceEvent
+              mapping: order:io.github.cdm.orderservice.event.OrderPlaceEvent
   config:
     import: optional:configserver:${CONFIG_SERVER_URL:http://localhost:8888}
 

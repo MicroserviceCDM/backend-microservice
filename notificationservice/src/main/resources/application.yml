@@ -23,7 +23,7 @@ spring:
           spring:
             json:
               type:
-                mapping: order:com.minhvu.notificationservice.event.OrderPlaceEvent, change-password:com.minhvu.notificationservice.event.ChangePasswordEvent
+                mapping: order:io.github.cdm.notificationservice.event.OrderPlaceEvent, change-password:io.github.cdm.notificationservice.event.ChangePasswordEvent
         group-id: notification-group-id
     config:
       import: optional:configserver:${CONFIG_SERVER_URL:http://localhost:8888}

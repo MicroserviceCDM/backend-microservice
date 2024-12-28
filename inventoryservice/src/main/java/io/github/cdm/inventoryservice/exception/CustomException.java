@@ -1,8 +1,10 @@
 package io.github.cdm.inventoryservice.exception;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
+@EqualsAndHashCode(callSuper = true)
 public class CustomException extends RuntimeException{
 
     private String errorCode;
