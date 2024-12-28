@@ -26,6 +26,7 @@ dependencies {
     
     // Jakarta
     implementation("jakarta.persistence:jakarta.persistence-api")
+    implementation("jakarta.ws.rs:jakarta.ws.rs-api:4.0.0")
     
     // Lombok
     compileOnly("org.projectlombok:lombok")
