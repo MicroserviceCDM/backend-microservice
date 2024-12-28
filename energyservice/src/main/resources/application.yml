@@ -8,7 +8,7 @@ spring:
     mongodb:
       username: mongo
       password: mongo
-      host: localhost
+      host: mongodb
       port: 27017
       database: energy-service
       authentication-database: admin
