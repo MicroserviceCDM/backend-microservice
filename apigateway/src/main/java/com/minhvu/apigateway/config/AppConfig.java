@@ -7,7 +7,7 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.reactive.CorsWebFilter;
 import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
 import org.springframework.web.util.pattern.PathPatternParser;
-import java.util.Collections;
+import java.util.Arrays;
 
 @Configuration
 public class AppConfig {
@@ -21,8 +21,8 @@ public class AppConfig {
         CorsConfiguration corsConfig = new CorsConfiguration();
         corsConfig.setAllowedOrigins(Arrays.asList(
             "https://cdm.tuilakhanh.id.vn",
-            "http://localhost:5173",
-        ));        
+            "http://localhost:5173"
+        ));     
         corsConfig.addAllowedMethod("*");
         corsConfig.setAllowCredentials(true);
         corsConfig.setMaxAge(3600L);
