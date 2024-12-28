@@ -19,8 +19,10 @@ public class AppConfig {
     @Bean
     public CorsWebFilter corsWebFilter() {
         CorsConfiguration corsConfig = new CorsConfiguration();
-        corsConfig.setAllowedOrigins(Collections.singletonList("https://cdm.tuilakhanh.id.vn"));
-        corsConfig.addAllowedHeader("*");
+        corsConfig.setAllowedOrigins(Arrays.asList(
+            "https://cdm.tuilakhanh.id.vn",
+            "http://localhost:5173",
+        ));        
         corsConfig.addAllowedMethod("*");
         corsConfig.setAllowCredentials(true);
         corsConfig.setMaxAge(3600L);
