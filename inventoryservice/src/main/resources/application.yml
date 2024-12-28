@@ -4,7 +4,7 @@ server:
 spring:
   data:
     mongodb:
-      uri: "mongodb://mongodb:27017/?directConnection=true"
+      uri: "mongodb://mongo:mongo@mongodb:27017?authSource=admin"
       database: "CDM"
   jpa:
     hibernate:
