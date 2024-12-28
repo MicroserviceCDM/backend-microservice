@@ -4,4 +4,4 @@ WORKDIR /app
 
 COPY build/libs/notificationservice.jar app.jar
 
-ENTRYPOINT ["java", "-jar", "app.jar"]
+ENTRYPOINT ["java", "-jar", "--add-opens=java.base/java.time=ALL-UNNAMED", "app.jar"]
