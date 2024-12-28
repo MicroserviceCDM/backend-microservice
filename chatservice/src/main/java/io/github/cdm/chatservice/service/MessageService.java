@@ -26,14 +26,14 @@ public class MessageService {
     }
 
     public List<Message> loadPrivateMessages(String user1, String user2) {
-    List<Message> messagesUser1ToUser2 = messageRepository.findBySenderNameAndReceiverNameAndStatusAllIgnoreCaseOrderByDateAsc(user1, user2, Status.MESSAGE);
-    List<Message> messagesUser2ToUser1 = messageRepository.findBySenderNameAndReceiverNameAndStatusAllIgnoreCaseOrderByDateAsc(user2, user1, Status.MESSAGE);
+        List<Message> messagesUser1ToUser2 = messageRepository.findBySenderNameAndReceiverNameAndStatusAllIgnoreCaseOrderByDateAsc(user1, user2, Status.MESSAGE);
+        List<Message> messagesUser2ToUser1 = messageRepository.findBySenderNameAndReceiverNameAndStatusAllIgnoreCaseOrderByDateAsc(user2, user1, Status.MESSAGE);
 
-    messagesUser1ToUser2.addAll(messagesUser2ToUser1);
-    messagesUser1ToUser2.sort(Comparator.comparing(Message::getDate));
+        messagesUser1ToUser2.addAll(messagesUser2ToUser1);
+        messagesUser1ToUser2.sort(Comparator.comparing(Message::getDate));
 
-    return messagesUser1ToUser2;
-}
+        return messagesUser1ToUser2;
+    }
 
 
 }
