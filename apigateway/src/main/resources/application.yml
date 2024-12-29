@@ -6,6 +6,15 @@ eureka:
     service-url:
       defaultZone: ${EUREKA_URL:http://registryservice:8761/eureka/}
 
+logging:
+  level:
+    reactor:
+      netty: INFO
+    org:
+      springframework:
+        cloud:
+          gateway: TRACE
+
 spring:
   config:
     import: optional:configserver:${CONFIG_SERVER_URL:http://localhost:8888}
