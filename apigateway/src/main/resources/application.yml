@@ -17,16 +17,16 @@ spring:
     gateway:
       default-filters:
         - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials, RETAIN_FIRST
-      # globalcors:
-      #   cors-configurations:
-      #     '[/**]':
-      #       allowedOrigins:
-      #         - "https://cdm.tuilakhanh.id.vn"
-      #         - "http://localhost:5173"
-      #       allowedMethods: "*"
-      #       allowedHeaders: "*"
-      #       allowCredentials: true
-      #       maxAge: 3600
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins:
+              - "https://cdm.tuilakhanh.id.vn"
+              - "http://localhost:5173"
+            allowedMethods: "*"
+            allowedHeaders: "*"
+            allowCredentials: true
+            maxAge: 3600
       routes:
 #        - id: REGISTRY-SERVICE
 #          uri: lb://REGISTRY-SERVICE
@@ -38,29 +38,11 @@ spring:
           uri: lb://AUTH-SERVICE
           predicates:
             - Path=/auth/**
-          metadata:
-            cors:
-              allowedOrigins:
-                - "https://cdm.tuilakhanh.id.vn"
-                - "http://localhost:5173"
-              allowedMethods: "*"
-              allowedHeaders: "*"
-              allowCredentials: true
-              maxAge: 3600
 
         - id: PRODUCT-SERVICE
           uri: lb://PRODUCT-SERVICE
           predicates:
             - Path=/api/v1/products/**
-          metadata:
-            cors:
-              allowedOrigins:
-                - "https://cdm.tuilakhanh.id.vn"
-                - "http://localhost:5173"
-              allowedMethods: "*"
-              allowedHeaders: "*"
-              allowCredentials: true
-              maxAge: 3600
           filters:
             - AuthenticationFilter
 #            - name: CircuitBreaker
@@ -115,39 +97,15 @@ spring:
           filters:
             - AuthenticationFilter
 
-
         - id: CHAT-SERVICE
           uri: lb://CHAT-SERVICE
           predicates:
             - Path=/api/chat/**
-          metadata:
-            cors:
-              allowedOrigins:
-                - "https://cdm.tuilakhanh.id.vn"
-                - "http://localhost:5173"
-              allowedMethods: "*"
-              allowedHeaders: "*"
-              allowCredentials: true
-              maxAge: 3600
-
-        - id: CHAT-SERVICE-WS
-          uri: lb:ws://CHAT-SERVICE
-          predicates:
-            - Path=/api/chatws/**
 
         - id: PAYMENT-SERVICE
           uri: lb://PAYMENT-SERVICE
           predicates:
             - Path=/api/payment/**
-          metadata:
-            cors:
-              allowedOrigins:
-                - "https://cdm.tuilakhanh.id.vn"
-                - "http://localhost:5173"
-              allowedMethods: "*"
-              allowedHeaders: "*"
-              allowCredentials: true
-              maxAge: 3600
 
         - id: VOUCHER-SERVICE
           uri: lb://VOUCHER-SERVICE
