@@ -17,9 +17,9 @@ public class Config {
     public static String vnp_Version = "2.1.0";
     public static String vnp_Command = "pay";
     public static String vnp_PayUrl = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
-    public static String vnp_ReturnUrl = "http://localhost:5173/customerhome/shoppingcart";
-    public static String vnp_TmnCode = "P3T1D7SY";
-    public static String secretKey = "PEDMVVZLSDKXSERYIJGIYKEUVNCHQQHO";
+    public static String vnp_ReturnUrl = "https://cdm.tuilakhanh.id.vn/customerhome/shoppingcart";
+    public static String vnp_TmnCode = "WN40WACT";
+    public static String secretKey = "6783P9FZI3KWEP3MVB4OP1A05E8FFOIB";
     public static String vnp_ApiUrl = "https://sandbox.vnpayment.vn/merchant_webapi/api/transaction";
 
 //    public static String md5(String message) {
