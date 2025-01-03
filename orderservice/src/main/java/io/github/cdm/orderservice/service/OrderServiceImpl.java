@@ -44,15 +44,18 @@ public class OrderServiceImpl implements OrderService {
         Map<Month, BigDecimal> monthlyRevenue = new TreeMap<>(Arrays.stream(Month.values())
                 .collect(Collectors.toMap(Function.identity(), month -> BigDecimal.ZERO)));
 
-        orderRepository.findAll().forEach(order -> {
-            Month month = order.getOrderDate().getMonth();
-            BigDecimal currentAmount = monthlyRevenue.get(month);
-            monthlyRevenue.put(month, currentAmount.add(order.getTotalAmount()));
-        });
+        int currentYear = LocalDateTime.now().getYear();
+
+        orderRepository.findAll().stream()
+                .filter(order -> order.getOrderDate().getYear() == currentYear)
+                .forEach(order -> {
+                    Month month = order.getOrderDate().getMonth();
+                    BigDecimal currentAmount = monthlyRevenue.get(month);
+                    monthlyRevenue.put(month, currentAmount.add(order.getTotalAmount()));
+                });
 
         return monthlyRevenue;
     }
-
     @Override
     public BigDecimal calculateAverageOrderValue() {
         List<Order> allOrders = orderRepository.findAll();
